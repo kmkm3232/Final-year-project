@@ -1,0 +1,80 @@
+{% extends "client/layout.html" %}
+{% block content %}
+    <div class="row">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary">
+                <input type="radio" id="allra" name="alltype" value="all"  onfocus="filterall()" checked="">All Product</button>
+            </label>
+            {% for type in product_type_results %}
+                <label class="btn btn-secondary">
+                    <input type="radio" id="pra" name="pptype" value="{{ type[0] }}" autocomplete="off" onfocus="filter()">{{ type[0] }}</input>
+                </label>
+            {% endfor %}
+        </div>
+        <div class="dropdown">
+			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by</button>
+			<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+			   <button class="dropdown-item" type="button" onclick="sort()">Price per: Low to High</button>
+			   <button class="dropdown-item" type="button" onclick="sortre()">Price per: High to Low</button>
+			   <button class="dropdown-item" type="button" onclick="sortA()">Product name: A-Z</button>
+			   <button class="dropdown-item" type="button" onclick="sortAre()">Product name: Z-A</button>
+			</div>
+        </div>
+        <div>
+            <input class="form-control" id="myInput" type="text" placeholder="Search.." onkeyup="myFunction()">
+        </div>
+    </div>
+    <div class="row" style="padding-top: 25px;">
+        <div class="row col-md-8" id='Productcontainer'>
+            {% for product in product_results %}
+                <div class="card" style="width: 12rem;height: 18.5rem; position: relative;background-color: rgba(245, 245, 245, 0.4); ">
+                    <div class="card-body">
+                        <img class="card-img" src='/static/{{ product[4] }}' style="height: 45%;">
+                        <form action="/buy" method="POST">
+                            <a href="{{ url_for('productdetail', id = product[0] ) }}" class="card-title">{{product[1]}}</a>
+                            <div>
+                                {% if product[5] == 1 %}
+                                    <h8>$</h8><h8 class="card-price"> {{product[3]}}</h8> <hr>
+                                    <input type="hidden" name="productname" value="{{ product[1] }}">
+                                    <input type="hidden" name="productprice" value="{{ product[3] }}">
+                                    <input type="hidden" name="productid" value="{{ product[0] }}">    
+                                    Quantity: <input type="number" name="productquantity" style="width: 3em;" min="1" value="0">
+                                    <input type="Submit" class="btn btn-primary" value="Buy">
+                                {% else %}
+                                    <h8>$</h8><h8 class="card-price"> {{product[7]}}</h8>
+                                    <S><I><h8>$</h8><h8 class="card-price"> {{product[3]}}</h8></I></S> <hr>
+                                    <input type="hidden" name="productname" value="{{ product[1] }}">
+                                    <input type="hidden" name="productprice" value="{{ product[7] }}">
+                                    <input type="hidden" name="productid" value="{{ product[0] }}">    
+                                    Quantity: <input type="number" name="productquantity" style="width: 3em;" min="1" value="0">
+                                    <input type="Submit" class="btn btn-primary" value="Buy">
+                                {% endif %}
+                            </div>
+                            <a class="card-type" style="display: none;">{{product[2]}}</a>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-3">
+            Shopping Cart &nbsp TotalPrice: {{session['totalprice']}}<br>
+            <a class="btn btn-primary" href="/checkout">Check out</a> <br> <hr>
+            {% for item in session['shoppingcart'] %}
+                    Product Name: {{item[1]}} <br>
+                    Price: {{item[2]}} <br>
+                    <div class="row">
+                        <form  action="/updatequantity" method="POST">
+                            <input type="hidden" name="itemid" value="{{ item[0] }}">
+                            &nbsp&nbsp&nbspQuantity: <input type="number"  style="width: 3em;" name="itemquantity" min="1" value="{{item[3]}}" >
+                            <input type="submit" class="btn btn-primary" value="Update">
+                        </form>
+                        <form  action="/deleteitem" method="POST">
+                            <input type="hidden" name="itemid" value="{{ item[0] }}">
+                            <input type="submit" class="btn btn-danger" value="Delete"><br><br><HR>
+                        </form>
+                    </div>
+                    
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

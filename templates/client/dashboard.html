@@ -1,0 +1,36 @@
+{% extends "client/layout.html" %}
+{% block content %}
+    <h1 style="text-align: center;">User Information</h1>
+    {% for i in userinfo %}
+        <form action="/updateuserinfo" method="POST">
+            <table>
+                <tr>
+                    <td style="text-align: left;">User Name</td>
+                    <td>: </td>
+                    <td><a>{{ i[1] }}</a></td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">Password</td>
+                    <td>: </td>
+                    <td><input type="password" name="password" value="{{ i[2] }}"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">Date of Birth</td>
+                    <td>: </td>
+                    <td><input type="Date" name="dob" value="{{ i[3] }}"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">Email</td>
+                    <td>: </td>
+                    <td><input type="email" name="email" value="{{ i[4] }}"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">Phone Number</td>
+                    <td>: </td>
+                    <td><input type="number" name="phonenumber" value="{{ i[5] }}"></td>
+                </tr>
+            </table>
+            <input type="submit" class="btn btn-success" value="Save">
+        </form>
+    {% endfor %}
+{% endblock content %}

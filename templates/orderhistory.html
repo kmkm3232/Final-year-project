@@ -1,0 +1,81 @@
+{% extends "client/layout.html" %}
+{% block content %}
+    <h1 style="text-align: center;">Order History</h1>
+    {% for i in orderitemlist%}
+    {{i}}
+    {% endfor %}
+    {% for i in orderinfo %}
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="heading{{ i[0] }}">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ i[0] }}" aria-expanded="false" aria-controls="collapse{{ i[0] }}">
+                    Order # {{ i[0] }}
+                    </button>
+                </h2>
+                </div>
+                <div id="collapse{{ i[0] }}" class="collapse" aria-labelledby="heading{{ i[0] }}" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <table>
+                                <tr>
+                                    <td style="text-align: left;">Order ID</td>
+                                    <td>:</td>
+                                    <td><a>{{ i[0] }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td >Order Date</td>
+                                    <td>:</td>
+                                    <td><a>{{ i[2] }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td >Total Price</td>
+                                    <td>:</td>
+                                    <td><a>{{ i[3] }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td >Address Line 1</td>
+                                    <td>:</td>
+                                    <td><a>{{ i[4] }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td >Address Line 2</td>
+                                    <td>:</td>
+                                    <td><a>{{ i[5] }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td >Payment Method</td>
+                                    <td>:</td>
+                                    <td><a>{{ i[6] }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td >Delivery Time Slot</td>
+                                    <td>:</td>
+                                    <td><a>{{ i[7] }}</a></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-5">
+                            Product List:
+                            {% for a in actuallist %}
+                                {% if a[0] == i[0] %}
+                                 <table>
+                                    <tr >
+                                        <td style="padding: 15px;">Image</td>
+                                        <td style="padding: 15px;">{{ a[6] }}</td>
+                                        <td style="padding: 15px;">X {{ a[2] }}</td>
+                                        <td style="padding: 15px;">${{ a[5] }}</td>
+                                    </tr>
+                                 </table>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                </div>
+                </div>
+            </div>
+            </div>
+    {% endfor %}
+{% endblock content %}

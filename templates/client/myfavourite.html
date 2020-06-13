@@ -1,0 +1,44 @@
+{% extends "client/layout.html" %}
+{% block content %}
+    <h1>My Favourite</h1>
+    <table style="border: 1px solid black;">
+                <tr style="border: 1px solid black;">
+                    <td style="padding: 15px;">Product</td>
+                    <td style="padding: 15px;">Product Name</td>
+                    <td style="padding: 15px;">Price</td>
+                    <td style="padding: 15px;"></td>
+                    <td style="padding: 15px;"></td>    
+                </tr>
+    {% for i in results %}
+            <form action="/buy" method="POST">
+                <tr>
+                    <input type="hidden" name="productid" value="{{ i[0] }}">
+                    <input type="hidden" name="productname" value="{{ i[1] }}">
+                    {% if results[7] == 0 %}
+                    <input type="hidden" name="productprice" value="{{ i[3] }}">
+                    {% else %}
+                    <input type="hidden" name="productprice" value="{{ i[7] }}">
+                    {% endif %}
+                    <input type="hidden" name="productquantity" value="1">
+                    <td style="padding: 15px;"><img src='/static/{{ i[4] }}' style="height: 100px;"></td>
+                    <td style="padding: 15px;">{{ i[1] }}</td>
+                    {% if results[7] == 0 %}
+                    <td style="padding: 15px;">$ {{ i[3] }}</td>
+                    {% else %}
+                    <td style="padding: 15px;">
+                        ${{ i[7] }}
+                        <S><I>${{ i[3] }}</I></S>
+                    </td>
+                    {% endif %}
+                    <td style="padding: 15px;"><input type="submit" value="Buy"></td>
+                
+            </form>
+                    <form action="/removefa" method="POST">
+                        <input type="hidden" name="productid" value="{{ i[0] }}">
+                        <td><input type="submit" value="Remove"></td>
+                    </form>
+                </tr>
+        
+    {% endfor %}
+    </table>
+{% endblock content %}

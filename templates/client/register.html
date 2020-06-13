@@ -1,0 +1,17 @@
+{% extends "client/layout.html" %}
+{% block content %}
+    <h1>This is Register Page</h1>
+    <form method='POST' action="" name="register_form">
+        <p>Username</p>
+        <p><input type="text" name="register_input_username" required></p>
+        <p>Password</p>
+        <p><input type="password" name="register_input_password" required></p>
+        <p>Date of Birth</p>
+        <p><input type="date" name="register_input_dateofbirth" required>
+        <p>E-mail Address</p>
+        <p><input type="email" name="register_input_email" required>
+        <p>Phone Number</p>
+        <p><input type="tel" name="register_input_phonenumber" required>
+        <p><input type="submit" name="" class="btn btn-success" value="Submit"></p>
+    </form>
+{% endblock content %}

@@ -1,0 +1,63 @@
+{% extends "admin/adminlayout.html" %}
+{% block content %}
+    <h1>Edit Users</h1>
+    {% for i in userresults %}
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="heading{{ i[0] }}">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ i[0] }}" aria-expanded="false" aria-controls="collapse{{ i[0] }}">
+                    User # {{ i[0] }} -- {{ i[1] }}
+                    </button>
+                </h2>
+                </div>
+                <div id="collapse{{ i[0] }}" class="collapse" aria-labelledby="heading{{ i[0] }}" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <form action="" method="POST">
+                                <table>
+                                    <tr>
+                                        <td style="text-align: left;">User ID</td>
+                                        <td>:</td>
+                                        <td><a>{{ i[0] }}</a></td>
+                                        <input type="hidden" name="userid" value="{{ i[0] }}">
+                                    </tr>
+                                    <tr>
+                                        <td >User Name:</td>
+                                        <td>:</td>
+                                        <td><input type="text" value="{{ i[1] }}" name="username" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td >User Password:</td>
+                                        <td>:</td>
+                                        <td><input type="password" value="{{ i[2] }}" name="userpassword" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td >Date of Birth:</td>
+                                        <td>:</td>
+                                        <td><input type="date" value="{{ i[3] }}" name="dob" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td >Email:</td>
+                                        <td>:</td>
+                                        <td><input type="email" value="{{ i[4] }}" name="email" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td >Phone number:</td>
+                                        <td>:</td>
+                                        <td><input type="number" value="{{ i[5] }}" name="phonenumber" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td ><input type="submit" class="btn btn-success" value="Edit"></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+    {% endfor %}
+{% endblock content %}

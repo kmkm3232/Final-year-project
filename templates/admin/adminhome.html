@@ -1,0 +1,135 @@
+{% extends "admin/adminlayout.html" %}
+{% block content %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <h1>Statitics</h1>
+    <div class="row">
+        <div class="card" style="width: 16rem;">
+            <div class="card-body">
+              <table>
+                  <tr>
+                      <td>Total Users</td>
+                      <td>:</td>
+                      <td> </td>
+                      <td><h2>{{ users[0] }}</h2></td>
+                  </tr>
+              </table>
+            </div>
+        </div>
+        <div class="card" style="width: 16rem;">
+            <div class="card-body">
+              <table>
+                  <tr>
+                      <td>Total Orders</td>
+                      <td>:</td>
+                      <td> </td>
+                      <td><h2>{{ orders[0] }}</h2></td>
+                  </tr>
+              </table>
+            </div>
+        </div>
+        <div class="card" style="width: 16rem;">
+            <div class="card-body">
+              <table>
+                  <tr>
+                      <td>Total Product Sold</td>
+                      <td>:</td>
+                      <td> </td>
+                      <td><h2>{{ items[0] }}</h2></td>
+                  </tr>
+              </table>
+            </div>
+        </div>
+        <div class="card" style="width: 16rem;">
+            <div class="card-body">
+              <table>
+                  <tr>
+                      <td>Total Earn</td>
+                      <td>:</td>
+                      <td> </td>
+                      <td>$</td>
+                      <td> </td>
+                      <td><h2>{{ earns[0] }}</h2></td>
+                  </tr>
+              </table>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-5">
+            <h5>Top 5 Product Sales</h5>
+            <canvas id="myChart" width="400" height="150"></canvas>
+        </div>
+        <div class="col-md-5">
+            <h5>Product Sales by type</h5>
+            <canvas id="myChart1" width="400" height="150"></canvas>
+        </div>
+        
+    </div>
+    
+    <script>
+        var chartData = {
+            labels : [{% for item in label %}
+                        "{{item}}",
+                        {% endfor %}],
+            datasets : [{
+                label: 'Sales',
+                fill: true,
+                lineTension: 0.1,
+                backgroundColor: "rgba(75,192,192,0.4)",
+                borderColor: "rgba(75,192,192,1)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data : [{% for item in values %}
+                            {{item}},
+                        {% endfor %}],
+                spanGaps: false
+                }]
+                }
+                
+                // get chart canvas
+                var ctx = document.getElementById("myChart").getContext("2d");
+                
+                // create the chart using the chart canvas
+                var myChart = new Chart(ctx, {
+                type: 'horizontalBar',
+                data: chartData,
+                });
+    </script>
+    <script>
+        // get chart canvas
+        var ctx1 = document.getElementById("myChart1").getContext("2d");
+        
+        // create the chart using the chart canvas
+        var myChart = new Chart(document.getElementById("myChart1"), {
+            type: 'doughnut',
+            data: {
+            labels: [{% for item in label2 %}
+                        "{{item}}",
+                        {% endfor %}],
+            datasets: [
+                {
+                label: "Population (millions)",
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#e7123s"],
+                data: [{% for item in values1 %}
+                            {{item}},
+                        {% endfor %}]
+                }
+            ]
+            },
+            options: {
+            }
+        });
+    </script>
+{% endblock content %}

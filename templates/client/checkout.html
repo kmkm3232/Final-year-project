@@ -1,0 +1,73 @@
+{% extends "client/layout.html" %}
+{% block content %}
+    <h1 style="text-align: center;">Check Out</h1>
+    <div class="row" style="padding-top: 25px;">
+        <div class="row col-md-8" id='Productcontainer'>
+            <form method='POST' action="/submitcheckout">
+                <h5>Delivery Information</h5>
+                <table>
+                    <tr>
+                        <td style="text-align: right;">Receiver Name: </td>
+                        <td><input type="text" name="receivername" required></td>
+                    </tr>
+                    <tr> 
+                        <td style="text-align: right;">Address Line 1:</td>
+                        <td><input type="text" name="addressline1" size="40"></td>
+                    </tr>
+                    <tr> 
+                        <td style="text-align: right;">Address Line 2:</td>
+                        <td><input type="text" name="addressline2" size="40"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;">Payment Method:</td>
+                        <td>
+                            <select name="paymentmethod">
+                                <option value="cash_on_delivery">Cash on Delivery</option>
+                                <option value="credit_card">Credit Card</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr >
+                        <td style="text-align: right;">Contact:</td>
+                        <td><input type="number" name="contact" required></td>
+                    </tr>
+                </table>
+                <hr>
+                <h5> Speical requirment</h5>
+                <p>Prefre Delivery Time slot:
+                    <select name="timeslot">
+                        <option value="10:00-13:00">10:00-13:00</option>
+                        <option value="15:00-18:00">15:00-18:00</option>
+                        <option value="20:00-23:00">20:00-23:00</option>
+                    </select>
+                </p>
+                <p>Other requirement: </p>
+                <p><textarea rows="4" col="50" style="width: 300px;" name="otherrequirement"></textarea></p>
+                <p><i>Product will be deliveried in 7 work days.</i></p>
+                <p>Coupon: <input type="text" name="coupon"></p>
+                <p><input type="submit" class="btn btn-success" value="Submit"></p>
+            </form>
+        </div>
+        <div class="col-md-3">
+            Shopping Cart &nbsp TotalPrice: {{session['totalprice']}}<br> <hr>
+            {% for item in session['shoppingcart'] %}
+                    Product Name: {{item[1]}} <br>
+                    Price: {{item[2]}} <br>
+                    <div class="row">
+                        <form  action="/updatequantity" method="POST">
+                            <input type="hidden" name="itemid" value="{{ item[0] }}">
+                            &nbsp&nbsp&nbspQuantity: <input type="number"  style="width: 3em;" name="itemquantity" min="1" value="{{item[3]}}" >
+                            <input type="submit" class="btn btn-primary" value="Update">
+                        </form>
+                        <form action="/deleteitem" method="POST">
+                            <input type="hidden" name="itemid" value="{{ item[0] }}">
+                            <input type="submit" class="btn btn-danger" value="Delete"><br><br><HR>
+                        </form>
+                    </div>
+                    <table>
+                        
+                    </table>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

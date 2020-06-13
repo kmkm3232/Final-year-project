@@ -1,0 +1,66 @@
+{% extends "admin/adminlayout.html" %}
+{% block content %}
+    <h1>Delete Product</h1>
+    {% for i in product_results %}
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="heading{{ i[0] }}">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ i[0] }}" aria-expanded="false" aria-controls="collapse{{ i[0] }}">
+                    Product # {{ i[0] }} -- {{ i[1] }}
+                    </button>
+                </h2>
+                </div>
+                <div id="collapse{{ i[0] }}" class="collapse" aria-labelledby="heading{{ i[0] }}" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <form action="" method="POST">
+                                <table>
+                                    <tr>
+                                        <td style="text-align: left;">Product ID</td>
+                                        <td>:</td>
+                                        <td><a>{{ i[0] }}</a></td>
+                                        <input type="hidden" name="productid" value="{{ i[0] }}">
+                                    </tr>
+                                    <tr>
+                                        <td >Product Name:</td>
+                                        <td>:</td>
+                                        <td>{{ i[1] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td >Product Type:</td>
+                                        <td>:</td>
+                                        <td>{{ i[2] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td >Product Price:</td>
+                                        <td>:</td>
+                                        <td>${{ i[3] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td >Product Image:</td>
+                                        <td>:</td>
+                                        <td>{{ i[4] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td >Discount:</td>
+                                        <td>:</td>
+                                        <td>{{ i[5] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td ><input type="submit" class="btn btn-danger" value="Delete"></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                        <div class="col-md-5">
+                            <img src='/static/{{ i[4] }}' style="height: 200px;" alt="{{ i[4] }}">
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+    {% endfor %}
+{% endblock content %}
